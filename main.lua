@@ -4,6 +4,7 @@ require 'timer'
 require 'vec'
 require 'ent'
 require 'particle'
+require 'levels'
 
 -- store images
 love.images = {}
