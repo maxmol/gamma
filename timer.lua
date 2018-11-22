@@ -2,12 +2,13 @@
 timer = {}
 timer._ = {}
 
+local getTime = love.timer.getTime
 timer.create = function(name, secs, reps, func)
     if isfunction(func) then
         table.insert(timer._, {
             name = tostring(name),
             secs = tonumber(secs) or 0,
-            start = love.timer.getTime(),
+            start = getTime(),
             reps = reps,
             func = func
         })
@@ -28,7 +29,7 @@ timer.simple = function(secs, func)
         table.insert(timer._, {
             name = false,
             secs = tonumber(secs) or 0,
-            start = love.timer.getTime(),
+            start = getTime(),
             reps = 1,
             func = func
         })
@@ -43,7 +44,7 @@ function timer:tick()
             table.remove(timer._, i)
         else
             local when = t.start + t.secs
-            if love.timer.getTime() >= when then
+            if getTime() >= when then
                 t.func()
                 if t.reps then t.reps = t.reps - 1 end
                 t.start = when

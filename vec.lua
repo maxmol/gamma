@@ -78,14 +78,9 @@ function vec:rotated(phi)
     return self:copy():rotate(phi)
 end
 
-setmetatable(vec, {
-    __call = function(_, x, y) 
-        return setmetatable({
-            x = x or 0, 
-            y = y or 0
-        }, vec) 
-    end,
-    __index = function()
-        return nil
-    end
-})
+function vec:generate(x, y)
+    self.x = x or 0
+    self.y = y or 0
+end
+
+game.class(vec)

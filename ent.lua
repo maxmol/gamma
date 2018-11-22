@@ -21,7 +21,7 @@ function ent:draw() end
 function ent:think() end
 
 function ent:remove()
-    love.ents[self:index()] = nil
+    game.ents[self:index()] = nil
 
     for k, v in pairs(self) do
         self[k] = nil
@@ -30,20 +30,12 @@ function ent:remove()
     self._null = true
 end
 
-setmetatable(ent, {
-    __call = function(_) 
-        local e = setmetatable({
-            _pos = vec(),
-            _null = false,
-            _index = love.ents_counter
-        }, {__index = ent})
+function ent:generate()
+    self._pos = vec()
+    self._null = false
+    self._index = game.ents_counter
 
-        love.ents[love.ents_counter] = e
-        love.ents_counter = love.ents_counter + 1
-        
-        return e
-    end,
-    __index = function()
-        return nil
-    end
-})
+    game.addEnt(self)
+end
+
+game.class(ent)
