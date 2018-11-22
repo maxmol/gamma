@@ -13,4 +13,9 @@ function _:draw()
     love.graphics.draw(game.image("images/background.jpg"), 0, 0)
 end
 
+function _:exit()
+    wasdcube:remove()
+    arrowcube:remove()
+end
+
 return _

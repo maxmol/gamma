@@ -11,4 +11,8 @@ function _:draw()
     love.graphics.draw(game.image('images/background.jpg'), 0, 0)
 end
 
+function _:exit()
+    timer.remove('bgparticles')
+end
+
 return _

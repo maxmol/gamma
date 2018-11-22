@@ -33,7 +33,7 @@ require 'levels'
 
 -- init vars
 love.load = function()
-    levels:load('wow')
+    levels:load('menu')
 end
 
 -- draw the game
@@ -53,4 +53,12 @@ love.update = function(dt)
     end
 
     timer:tick(dt)
+end
+
+function love.keypressed(key, scancode, isrepeat)
+    levels:keypressed(key, scancode, isrepeat)
+
+    if key == 'escape' then
+        levels:load('menu')
+    end
 end
