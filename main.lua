@@ -27,6 +27,8 @@ game.ents_counter = 0
 require 'glob'
 require 'timer'
 require 'vec'
+require 'vgui'
+require 'button'
 require 'ent'
 require 'particle'
 require 'levels'
@@ -43,12 +45,20 @@ love.draw = function()
     for _, e in pairs(game.ents) do
         if e and not e._null then e:draw() end
     end
+    
+    for _, e in pairs(vgui._) do
+        if e and not e._null then e:draw() end
+    end
 end
 
 love.update = function(dt)
     levels:update(dt)
 
     for _, e in pairs(game.ents) do
+        if e and not e._null then e:think(dt) end
+    end
+
+    for _, e in pairs(vgui._) do
         if e and not e._null then e:think(dt) end
     end
 
@@ -60,5 +70,21 @@ function love.keypressed(key, scancode, isrepeat)
 
     if key == 'escape' then
         levels:load('menu')
+    end
+end
+
+function love.mousepressed(x, y, button, istouch, presses)
+    local a = false
+    for _, e in pairs(vgui._) do
+        local ex, ey = e:getPos().x, e:getPos().y
+        if e and not e._null and x > ex and y > ey and x < ex + e:getWidth() and y < ey + e:getHeight() then 
+            e:click(x, y, istouch, presses) 
+            a = true 
+            break 
+        end
+    end
+
+    if not a then
+        levels:mousepressed(x, y, button, istouch, presses)
     end
 end

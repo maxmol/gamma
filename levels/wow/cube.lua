@@ -18,11 +18,8 @@ end
 local isDown = love.keyboard.isDown
 function cube:think(dt)
     local move = vec()
-    if isDown(self.up) then
-        move.y = -1
-    end
-    if isDown(self.down) then
-        move.y = 1
+    if isDown(self.up) and self:getPos().y + self.size == love.graphics.getHeight() then
+        self.vel.y = -100
     end
     if isDown(self.right) then
         move.x = 1
@@ -31,7 +28,15 @@ function cube:think(dt)
         move.x = -1
     end
 
-    self:setPos(self:getPos() + move * 50 * dt)
+    self.vel.y = self.vel.y + move.y + 1
+
+    local pos = self:getPos() + move * 50 * dt + self.vel * dt
+    if pos.y + self.size > love.graphics.getHeight() then
+        pos.y = love.graphics.getHeight() - self.size
+        self.vel.y = math.min(self.vel.y, 0)
+    end
+
+    self:setPos(pos)
 end
 
 function cube:generate(pos, color, size, up, left, down, right)
@@ -42,6 +47,7 @@ function cube:generate(pos, color, size, up, left, down, right)
     self.left = left or 'a'
     self.down = down or 's'
     self.right = right or 'd'
+    self.vel = vec(0, 0)
 end
 
 game.class(cube)

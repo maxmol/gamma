@@ -29,3 +29,9 @@ function levels:keypressed(...)
         self.level:keypressed(...)
     end
 end
+
+function levels:mousepressed(...)
+    if self.level and levels.level.mousepressed then
+        self.level:mousepressed(...)
+    end
+end
