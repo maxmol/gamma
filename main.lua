@@ -23,6 +23,8 @@ end
 
 game.ents_counter = 0
 
+love.graphics.setDefaultFilter("nearest", "nearest") 
+
 -- includes
 require 'glob'
 require 'timer'
@@ -32,6 +34,7 @@ require 'button'
 require 'ent'
 require 'particle'
 require 'levels'
+require 'animation'
 
 -- init vars
 love.load = function()
